@@ -35,21 +35,6 @@ Park_Ids = {
     "Hong Kong Disneyland": "bd0eb47b-2f02-4d4d-90fa-cb3a68988e3b",
     "Shanghai Disneyland": "ddc4357c-c148-4b36-9888-07894fe75e83",
 }
-Park_Photo_Path = {
-    "Disneyland": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Disneyland Photo.png",
-    "California Adventure": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\California Adventure Photo.png",
-    "Magic Kingdom": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Magic Kingdom Photo.png",
-    "EPCOT": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\EPCOT Photo.png",
-    "Hollywood Studios": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Hollywood Studios Photo.png",
-    "Animal Kingdom": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Animal Kingdom Photo.png",
-    "Tokyo Disneyland": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Tokyo Disneyland Photo.png",
-    "Tokyo DisneySea": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Tokyo DisneySea Photo.png",
-    "Disneyland Paris": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Disneyland Paris Photo.png",
-    "Walt Disney Studios Park": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Walt Disney Studios Park.png",
-    "Hong Kong Disneyland": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Hong Kong Disneyland.jpg",
-    "Shanghai Disneyland": r"C:\\Users\\ewklu\\OneDrive\\Desktop\\pythonPrograms\\Testing python\\Photos\\Shanghai Disneyland Photo.png",
-}
-
 options = [
     "Select Option",
     "Disneyland",
