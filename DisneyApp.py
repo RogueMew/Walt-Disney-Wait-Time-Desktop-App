@@ -303,10 +303,10 @@ def Select_Park_Button():
         )
         Current_Date_Label.place(x=0, y=0)
         photo = Image.open(os.path.join(os.getcwd(),"Photos", Photo_Path.format(Park_Selected.get())))
-        photo = photo.resize((500,250))
+        photo = photo.resize((560,315))
         photo = ImageTk.PhotoImage(photo)
         Park_Photo.create_image(0, 0, anchor=AppWindow.NW, image=photo)
-        Park_Photo.place(x=WindowData["WindowWidth"]-500,y=30)
+        Park_Photo.place(x=WindowData["WindowWidth"]-560,y=30)
 
 
 def Back_Button_Command(PreviousPage):
@@ -334,7 +334,7 @@ Back_Button_Main = AppWindow.Button(
 Park_Menus = AppWindow.OptionMenu(root, Park_Selected, *options)
 # Labels
 Current_Date_Label = AppWindow.Label(root, text="", font=Fonts["Date"])
-Park_Photo = AppWindow.Canvas(root,width=500,height=250)
+Park_Photo = AppWindow.Canvas(root,width=560,height=315)
 # Initial Setup
 Exit_Button.place(
     width=60,
