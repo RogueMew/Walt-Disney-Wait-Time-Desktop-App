@@ -343,9 +343,9 @@ def Back_Button_Command(PreviousPage):
     if PreviousPage == "Back":
         Select_Park_Button()
 
+
 def Menu_Button_Command(Type_chosen):
     JSON_Finder(Type_chosen)
-
 
 
 # Button Definers
@@ -356,10 +356,21 @@ Park_Selected_Button = AppWindow.Button(
 Back_Button_Main = AppWindow.Button(
     root, text="Back", command=lambda: Back_Button_Command("Main")
 )
-Back_Button_Menu = AppWindow.Button(root, text="Back", command=lambda: Back_Button_Main("Menu"))
-Ride_Button = AppWindow.Button(root, text="Rides", font=Fonts["Menu Buttons"], width=10, command=lambda: Menu_Button_Command("ride"))
+Back_Button_Menu = AppWindow.Button(
+    root, text="Back", command=lambda: Back_Button_Main("Menu")
+)
+Ride_Button = AppWindow.Button(
+    root,
+    text="Rides",
+    font=Fonts["Menu Buttons"],
+    width=10,
+    command=lambda: Menu_Button_Command("ride"),
+)
 Restaurants_Button = AppWindow.Button(
-    root, text="Restaurants", font=Fonts["Menu Buttons"],command=lambda: Menu_Button_Command("restaurant")
+    root,
+    text="Restaurants",
+    font=Fonts["Menu Buttons"],
+    command=lambda: Menu_Button_Command("restaurant"),
 )
 Shows_Button = AppWindow.Button(
     root, text="Shows", font=Fonts["Menu Buttons"], width=10
