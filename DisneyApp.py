@@ -64,6 +64,7 @@ WindowData = {
 root.geometry("{}x{}+0+0".format(WindowData["WindowWidth"], WindowData["WindowHeight"]))
 root.title(WindowData["WindowTitle"])
 root.resizable(False, False)
+root.config(bg = "Light Blue")
 
 
 # Variables
@@ -78,7 +79,11 @@ Park_Time_URL = "https://api.themeparks.wiki/v1/entity/{}/schedule"
 Park_Current_Date_Label = "The Date at {} is {}"
 photo = None
 Photo_Path = "{} Photo.png"
-Fonts = {"Date": font.Font(size=13, weight="bold")}
+Fonts = {
+    "Date": font.Font(size=13,  family="cursive"),
+    "Menu Buttons" : font.Font(size=13, family="cursive"),
+    "Park Name" : font.Font(size=18, family="cursive")
+}
 
 
 # JSON Loader And Readers
@@ -288,37 +293,36 @@ def Select_Park_Button():
         global photo
         PreviousPage = "Main"
         root.title("{} Directory".format(Park_Selected.get()))
-        Park_Menus.pack_forget()
-        Park_Selected_Button.pack_forget()
+        Park_Menus.place_forget()
+        Park_Selected_Button.place_forget()
         Back_Button_Main.place(
             width=60, height=30, x=WindowData["WindowWidth"] - 120, y=0
         )
 
         
         JSONLooader(Park_Selected.get())
-        Time_Getter(Park_Selected.get())
-        Current_Date_Label.config(
-            text=Park_Current_Date_Label.format(Park_Selected.get(), Park_Current_Date),
-            font=Fonts["Date"],
-        )
-        Current_Date_Label.place(x=0, y=0)
+        Park_Name_Label.config(text="{} Menu".format(Park_Selected.get()), bg="Light Blue")
+        Park_Name_Label.place(x=0,y=0)
         photo = Image.open(os.path.join(os.getcwd(),"Photos", Photo_Path.format(Park_Selected.get())))
         photo = photo.resize((560,315))
         photo = ImageTk.PhotoImage(photo)
         Park_Photo.create_image(0, 0, anchor=AppWindow.NW, image=photo)
         Park_Photo.place(x=WindowData["WindowWidth"]-560,y=30)
+        Ride_Button.place(x=0, y=30)
 
 
 def Back_Button_Command(PreviousPage):
     if PreviousPage == "Main":
         root.title(WindowData["WindowTitle"])
         Park_Selected.set("Select Option")
-        Park_Menus.pack()
-        Park_Selected_Button.pack()
+        Park_Menus.place(width=120, height=60, x =WindowData["WindowWidth"]/2,y=WindowData["WindowHeight"]-400)
+        Park_Selected_Button.place(width=120, height=60,x =WindowData["WindowWidth"]/2,y=WindowData["WindowHeight"]-300)
         Current_Date_Label.pack_forget()
         Back_Button_Main.place_forget()
         Park_Photo.place_forget()
         Current_Date_Label.place_forget()
+        Park_Name_Label.place_forget()
+        Ride_Button.place_forget()
 
 
 # Button Definers
@@ -329,11 +333,14 @@ Park_Selected_Button = AppWindow.Button(
 Back_Button_Main = AppWindow.Button(
     root, text="Back", command=lambda: Back_Button_Command("Main")
 )
-
+Ride_Button = AppWindow.Button(root, text="Rides", font=Fonts["Menu Buttons"])
+Restaurants_Button = AppWindow.Button(root, text="Restaurants", font=Fonts["Menu Buttons"])
+Shows_Button = AppWindow.Button(root, text="Shows", font=Fonts["Menu Buttons"])
 # Menu Definers
 Park_Menus = AppWindow.OptionMenu(root, Park_Selected, *options)
 # Labels
 Current_Date_Label = AppWindow.Label(root, text="", font=Fonts["Date"])
+Park_Name_Label = AppWindow.Label(root,font=Fonts["Park Name"])
 Park_Photo = AppWindow.Canvas(root,width=560,height=315)
 # Initial Setup
 Exit_Button.place(
@@ -342,8 +349,8 @@ Exit_Button.place(
     x=WindowData["WindowWidth"] - 60,
     y=0,
 )
-Park_Menus.pack()
-Park_Selected_Button.pack()
+Park_Menus.place(width=120, height=60, x =WindowData["WindowWidth"]/2,y=WindowData["WindowHeight"]-400)
+Park_Selected_Button.place(width=120, height=60,x =WindowData["WindowWidth"]/2,y=WindowData["WindowHeight"]-300)
 
 # Removed Items
 Park_Menus.place()
