@@ -1,7 +1,3 @@
-Certainly! Here's an updated version of the README file with the main script named "app.py":
-
----
-
 # Park App Tracker
 
 Park App Tracker is a Python application designed to provide users with real-time information about attractions in various theme parks. The application allows users to track wait times, view attraction details, and navigate through different park and attraction types.
