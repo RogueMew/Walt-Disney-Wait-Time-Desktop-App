@@ -67,20 +67,6 @@ def waitTimeGetter(ride):
                             data.boardingNext = temp["liveData"][0]["queue"]["BOARDING_GROUP"]["nextAllocationTime"]
                         if "estimatedWait" in temp["liveData"][0]["queue"]["BOARDING_GROUP"]:
                             data.boardingTime = temp["liveData"][0]["queue"]["BOARDING_GROUP"]["estimatedWait"]
-                    print("Complete")
-                    print(data.standby,
-                        "\n",data.single,
-                        "\n",data.boardingStart,
-                        "\n",data.boardingEnd,
-                        "\n",data.boardingState,
-                        "\n",data.boardingNext,
-                        "\n",data.boardingTime,
-                        "\n",data.lightningState,
-                        "\n",data.lightningStart,
-                        "\n",data.lightningEnd,
-                        "\n",data.lightningPrice,
-                        "\n",data.lightningCurrency
-                        )
                 else:
                     data.Ride_Status = "Open" 
             elif temp["liveData"][0]["status"] != "OPERATING":

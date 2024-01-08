@@ -12,7 +12,6 @@ window = psg.Window("Disney Park App Tracker", layout= win.layoutStack(1),)
 
 while True:
     event, values = window.read()
-    print(f"Event: {event}, Values: {values}")
 
     if event == psg.WIN_CLOSED or event == "Exit":
         break
