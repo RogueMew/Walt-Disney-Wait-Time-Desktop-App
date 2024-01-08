@@ -21,8 +21,8 @@ Park_Ids = {
     "Animal Kingdom": "1c84a229-8862-4648-9c71-378ddd2c7693",
     "Tokyo Disneyland": "3cc919f1-d16d-43e0-8c3f-1dd269bd1a42",
     "Tokyo DisneySea": "67b290d5-3478-4f23-b601-2f8fb71ba803",
-    "Disneyland Paris": "dae968d5-630d-4719-8b06-3d107e944401",
-    "Walt Disney Studios Park": "ca888437-ebb4-4d50-aed2-d227f7096968",
+    "Disneyland Paris": "dae968d5-63d-4719-8b6-3d17e94441",
+    "Walt Disney Studios Park": "bd0eb47b-2f02-4d4d-90fa-cb3a68988e3b",
     "Hong Kong Disneyland": "bd0eb47b-2f02-4d4d-90fa-cb3a68988e3b",
     "Shanghai Disneyland": "ddc4357c-c148-4b36-9888-07894fe75e83",
 }
@@ -41,6 +41,34 @@ Park_options = [
     "Hong Kong Disneyland",
     "Shanghai Disneyland",
 ]
+
+
 Type_Options = ["Rides", "Shows", "Restaurants"]
 Ride_Name = []
+<<<<<<< Updated upstream
 Ride_Ids = []
+=======
+Ride_Ids = ""
+Ride_Closed = ""
+
+Ride_Status = ""
+
+selected_Park = ""
+selected_Type = ""
+selected_Ride = ""
+
+standby = ""
+single = ""
+
+boardingStart = ""
+boardingEnd = ""
+boardingState = ""
+boardingNext = ""
+boardingTime = ""
+
+lightningState = ""
+lightningStart = ""
+lightningEnd = ""
+lightningPrice = ""
+lightningCurrency = ""
+>>>>>>> Stashed changes
