@@ -45,9 +45,6 @@ Park_options = [
 
 Type_Options = ["Rides", "Shows", "Restaurants"]
 Ride_Name = []
-<<<<<<< Updated upstream
-Ride_Ids = []
-=======
 Ride_Ids = ""
 Ride_Closed = ""
 
@@ -71,4 +68,3 @@ lightningStart = ""
 lightningEnd = ""
 lightningPrice = ""
 lightningCurrency = ""
->>>>>>> Stashed changes
