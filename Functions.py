@@ -26,7 +26,7 @@ def NameAdder(Type):
                 else:
                     data.Ride_Name.append(rideNames["name"])
             else:
-                data.Ride_Name.append("-- Unknown Status --" + rideNames["name"] + "--   Unknown Status --")
+                data.Ride_Name.append("--Unknown Status-- " + rideNames["name"] + " --Unknown Status--")
 
 def waitTimeGetter(ride):
 

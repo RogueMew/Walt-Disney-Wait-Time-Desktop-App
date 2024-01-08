@@ -43,7 +43,7 @@ Park_options = [
 ]
 
 
-Type_Options = ["Rides", "Shows", "Restaurants"]
+Type_Options = ["Rides", "--WIP-- Shows --WIP--", "--WIP-- Restaurants --WIP--"]
 Ride_Name = []
 Ride_Ids = ""
 Ride_Closed = ""
