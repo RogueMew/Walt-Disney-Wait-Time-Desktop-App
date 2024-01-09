@@ -3,6 +3,14 @@ import data as data
 import Functions as func
 import Windows as win
 import testWifi as wifitest
+import windowsMinimizeTerminal as Windows
+import LinuxDarwinMinimizeWindow as AppleLinux
+import platform as OperatingSystem
+
+if OperatingSystem.system() == "Linux" or OperatingSystem.system() == "Darwin":
+    AppleLinux.AppleLinuxMinimizeTerminal()
+elif OperatingSystem.system() == "Windows":
+    Windows.terminalMiniWIN()
 
 if wifitest.internetConnectionTest() == False:
     psg.popup_error("Could not connect to the internet\nConnect to a network an reboot the app",title="Error 404")
