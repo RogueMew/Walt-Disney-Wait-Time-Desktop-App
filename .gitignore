@@ -3,3 +3,6 @@ photoPath.py
 /Photos
 test.py
 test.csv
+/.vs
+/dist
+WaitTimeApp.spec
