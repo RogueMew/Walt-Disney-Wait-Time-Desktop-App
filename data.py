@@ -1,3 +1,12 @@
+Ride_Ids_URL = "https://api.themeparks.wiki/v1/entity/{}/children"
+Park_Time_URL = "https://api.themeparks.wiki/v1/entity/{}/schedule"
+Ride_Time_URL = "https://api.themeparks.wiki/v1/entity/{}/live"
+All_Park_Ids_URL = "https://api.themeparks.wiki/v1/destinations"
+Entity_Data_URL = "https://api.themeparks.wiki/v1/entity/{}"
+
+
+
+
 Park_TimeZones = {
     "Disneyland": "America/Los_Angeles",
     "California Adventure": "America/Los_Angeles",
@@ -14,17 +23,17 @@ Park_TimeZones = {
 }
 Park_Ids = {
     "Disneyland": "7340550b-c14d-4def-80bb-acdb51d49a66",
-    "California Adventure": "832fcd51-ea19-4e77-85c7-75d5843b127c",
-    "Magic Kingdom": "75ea578a-adc8-4116-a54d-dccb60765ef9",
-    "EPCOT": "47f90d2c-e191-4239-a466-5892ef59a88b",
-    "Hollywood Studios": "288747d1-8b4f-4a64-867e-ea7c9b27bad8",
-    "Animal Kingdom": "1c84a229-8862-4648-9c71-378ddd2c7693",
-    "Tokyo Disneyland": "3cc919f1-d16d-43e0-8c3f-1dd269bd1a42",
-    "Tokyo DisneySea": "67b290d5-3478-4f23-b601-2f8fb71ba803",
+    "California Adventure": "disneycaliforniaadventurepark",
+    "Magic Kingdom": "magickingdompark",
+    "EPCOT": "epcot",
+    "Hollywood Studios": "disneyshollywoodstudios",
+    "Animal Kingdom": "disneysanimalkingdomthemepark",
+    "Tokyo Disneyland": "tokyodisneyland",
+    "Tokyo DisneySea": "tokyodisneysea",
     "Disneyland Paris": "dae968d5-63d-4719-8b6-3d17e94441",
-    "Walt Disney Studios Park": "bd0eb47b-2f02-4d4d-90fa-cb3a68988e3b",
+    "Walt Disney Studios Park": "ca888437-ebb4-4d50-aed2-d227f7096968",
     "Hong Kong Disneyland": "bd0eb47b-2f02-4d4d-90fa-cb3a68988e3b",
-    "Shanghai Disneyland": "ddc4357c-c148-4b36-9888-07894fe75e83",
+    "Shanghai Disneyland": "shanghaidisneyland",
 }
 Park_options = [
     "Select Option",
@@ -41,7 +50,24 @@ Park_options = [
     "Hong Kong Disneyland",
     "Shanghai Disneyland",
 ]
+resortNames = [
+    "Walt Disney World® Resort",
+    "Tokyo Disney Resort",
+    "Shanghai Disney Resort",
+    "Disneyland Paris",
+    "Disneyland Resort",
+    "Hong Kong Disneyland Parks"
+]
 
+
+parkWantedTimeZone = None
+SpecialEvent = False
+completed = None
+
+parkOpened = ""
+parkTime = ""
+parkOperationOpen = ""
+parkOperationClosed = ""
 
 Type_Options = ["Rides", "--WIP-- Shows --WIP--", "--WIP-- Restaurants --WIP--"]
 Ride_Name = []

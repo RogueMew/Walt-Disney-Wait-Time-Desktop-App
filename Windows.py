@@ -11,6 +11,7 @@ def layoutStack(layoutWanted):
         return layout1
     if layoutWanted == 2:
         layout2 = [
+            [psg.Text("The time at {} is {}".format(data.selected_Park,data.parkTime)),psg.VerticalSeparator(), psg.Text("Park Opertion Hours: {} - {}".format(data.parkOperationOpen,data.parkOperationClosed)),psg.VerticalSeparator(),psg.Text("Park is {}".format(data.parkOpened))],
             [psg.Text("Disney Park App Tracker"), psg.Button("Back to Park Selection"), psg.Button("Exit")],
             [psg.Text("Select Attraction Type:"), psg.OptionMenu(data.Type_Options, key="-Type-"), psg.Button("Select Type")]
         ]
@@ -28,3 +29,9 @@ def layoutStack(layoutWanted):
             [psg.Text("Lightning Lanes Available: {}".format(data.lightningState), background_color="white",text_color="Black"),psg.Text("Lightning Lane Price: {} {}".format(data.lightningPrice, data.lightningCurrency), background_color="white",text_color="Black"), psg.Text("Lightning Lane Return Time Start: {}".format(data.lightningStart), background_color="white",text_color="Black"), psg.Text("Lightning Lane Time End: {}".format(data.lightningEnd), background_color="white", text_color="Black")]
         ]
         return layout4
+    if layoutWanted == 5:
+        layout5 = [
+            [psg.Text("The time at {} is {}".format(data.selected_Park,data.parkTime)),psg.VerticalSeparator(), psg.Text("Park Opertion Hours: {} - {}".format(data.parkOperationOpen,data.parkOperationClosed)),psg.VerticalSeparator(),psg.Text("Park is {}".format(data.parkOpened))],
+            [psg.Text("Disney Park App Tracker"), psg.Button("Back to Park Selection"), psg.Button("Exit")]
+        ]
+        return layout5

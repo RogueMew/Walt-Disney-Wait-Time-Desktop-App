@@ -2,9 +2,7 @@ import requests as web
 import data as data
 import PySimpleGUI as psg
 
-Ride_Ids_URL = "https://api.themeparks.wiki/v1/entity/{}/children"
-Park_Time_URL = "https://api.themeparks.wiki/v1/entity/{}/schedule"
-Ride_Time_URL = "https://api.themeparks.wiki/v1/entity/{}/live"
+
 
 ParkjasonRaw = ""
 ParkJasonRefined = ""
@@ -12,13 +10,13 @@ firstItem = ""
 
 def JSONLooader(Park):
     global ParkjasonRaw, ParkJasonRefined
-    ParkjasonRaw = web.get(Ride_Ids_URL.format(data.Park_Ids[Park]))
+    ParkjasonRaw = web.get(data.Ride_Ids_URL.format(data.Park_Ids[Park]))
     ParkJasonRefined = ParkjasonRaw.json()
 
 def NameAdder(Type):
     for rideNames in ParkJasonRefined["children"]:
         if Type == "Rides" and rideNames["entityType"] == "ATTRACTION":
-            temp = web.get(Ride_Time_URL.format(rideNames["id"]))
+            temp = web.get(data.Ride_Time_URL.format(rideNames["id"]))
             temp = temp.json()
             if len(temp["liveData"]) > 0:
                 if temp["liveData"][0]["status"] != "OPERATING":
@@ -35,7 +33,7 @@ def waitTimeGetter(ride):
         if rides["name"] == ride:
             data.Ride_Ids = rides["id"]
             break
-    temp = web.get(Ride_Time_URL.format(data.Ride_Ids))
+    temp = web.get(data.Ride_Time_URL.format(data.Ride_Ids))
     if len(temp.text) > 0:
         temp = temp.json()
         if len(temp["liveData"]) > 0:

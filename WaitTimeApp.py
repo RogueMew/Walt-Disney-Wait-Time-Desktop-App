@@ -6,6 +6,7 @@ import testWifi as wifitest
 import windowsMinimizeTerminal as Windows
 import LinuxDarwinMinimizeWindow as AppleLinux
 import platform as OperatingSystem
+import scheduleDetector as parkTime
 
 if OperatingSystem.system() == "Linux" or OperatingSystem.system() == "Darwin":
     AppleLinux.AppleLinuxMinimizeTerminal()
@@ -25,15 +26,20 @@ while True:
         break
     
     if event == "Select Park":
-        selected_Park = values["-Park-"]
-        if selected_Park != "Select Option":
-            func.JSONLooader(selected_Park)
+        data.selected_Park = values["-Park-"]
+
+        
         data.selected_Park = values["-Park-"]
         if data.selected_Park != "Select Option":
             func.JSONLooader(data.selected_Park)
-            window["-Park-"].update('')
-            window.close()
-            window = psg.Window("{} Attraction Menu".format(values["-Park-"]), layout=win.layoutStack(2))
+            parkTime.parkStatusChecker()
+            if data.parkOpened == "Open":
+                window.close()
+                window = psg.Window("{} Attraction Menu".format(values["-Park-"]), layout=win.layoutStack(2))
+            if data.parkOpened == "Closed":
+                window.close()
+                window = psg.Window("{} Attraction Menu".format(values["-Park-"]), layout=win.layoutStack(5))
+            
     
     if event == "Back to Park Selection":
         window.close()
@@ -41,14 +47,14 @@ while True:
     
     if event == "Back to Type Selection":
         window.close()
-        window = psg.Window("{} Attraction Menu".format(selected_Park), layout= win.layoutStack(2))
+        window = psg.Window("{} Attraction Menu".format(data.selected_Park), layout= win.layoutStack(2))
         window = psg.Window("{} Attraction Menu".format(data.selected_Park), layout= win.layoutStack(2))
     
     if event == "Select Type":
         selected_Type = values["-Type-"]
         func.NameAdder(selected_Type)
         window.close()
-        window = psg.Window("{} {} Choices".format(selected_Park, selected_Type), layout=win.layoutStack(3))
+        window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
         window = psg.Window("{} {} Choices".format(data.selected_Park, data.selected_Type), layout=win.layoutStack(3))
     
     if event == "Select Attraction":
