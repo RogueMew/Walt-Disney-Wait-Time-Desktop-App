@@ -16,10 +16,16 @@ def parkStatusChecker():
                 data.parkOperationClosed = tickets["closingTime"].split("T")[-1].split("+")[0].split("-")[0]
                 closingTimeList = tickets["closingTime"].split("T")[-1].split("+")[0].split("-")[0].split(":")
                 openingTimeList = tickets["openingTime"].split("T")[-1].split("+")[0].split("-")[0].split(":")
+                if closingTimeList[0] == '00':
+                    closingTimeList[0] = '24'
                 if (
-                    int(openingTimeList[0]) <= int(currentTimeList[0]) < int(closingTimeList[0]) or
+                    (int(openingTimeList[0]) < int(currentTimeList[0]) < int(closingTimeList[0])) or
                     (int(openingTimeList[0]) == int(currentTimeList[0]) and int(openingTimeList[1]) <= int(currentTimeList[1])) or
-                    (int(closingTimeList[0]) == int(currentTimeList[0]) and int(closingTimeList[1]) > int(currentTimeList[1]))
+                    (int(closingTimeList[0]) == int(currentTimeList[0]) and int(closingTimeList[1]) > int(currentTimeList[1])) or
+                    (closingTimeList[0] == '00' and (
+                        int(currentTimeList[0]) < int(openingTimeList[0]) or
+                        (int(currentTimeList[0]) == int(openingTimeList[0]) and int(currentTimeList[1]) < int(openingTimeList[1]))
+                    ))
                 ):
                     data.parkOpened = "Open"
                 else:

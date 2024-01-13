@@ -8,6 +8,7 @@ import LinuxDarwinMinimizeWindow as AppleLinux
 import platform as OperatingSystem
 import scheduleDetector as parkTime
 
+
 if OperatingSystem.system() == "Linux" or OperatingSystem.system() == "Darwin":
     AppleLinux.AppleLinuxMinimizeTerminal()
 elif OperatingSystem.system() == "Windows":
@@ -39,7 +40,6 @@ while True:
             if data.parkOpened == "Closed":
                 window.close()
                 window = psg.Window("{} Attraction Menu".format(values["-Park-"]), layout=win.layoutStack(5))
-            
     
     if event == "Back to Park Selection":
         window.close()
@@ -48,14 +48,16 @@ while True:
     if event == "Back to Type Selection":
         window.close()
         window = psg.Window("{} Attraction Menu".format(data.selected_Park), layout= win.layoutStack(2))
-        window = psg.Window("{} Attraction Menu".format(data.selected_Park), layout= win.layoutStack(2))
     
     if event == "Select Type":
         selected_Type = values["-Type-"]
-        func.NameAdder(selected_Type)
-        window.close()
-        window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
-        window = psg.Window("{} {} Choices".format(data.selected_Park, data.selected_Type), layout=win.layoutStack(3))
+        if selected_Type == "Rides":
+            func.NameAdder(selected_Type)
+            window.close()
+            window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
+        elif selected_Type == "--WIP-- Shows --WIP--" or selected_Type == "--WIP-- Restaurants --WIP--":
+            psg.popup_error("This Function is A work in progress")
+
     
     if event == "Select Attraction":
         data.selected_Ride = values["-Ride-"]
