@@ -53,9 +53,17 @@ while True:
         selected_Type = values["-Type-"] 
         if selected_Type == "--WIP-- Restaurants --WIP--":
             psg.popup_error("This Function is A work in progress")
-        func.NameAdder(selected_Type)
-        window.close()
-        window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
+        elif selected_Type == "--WIP-- Shows --WIP--":
+            psg.popup_error("This Function is in Devepment and may not work as intendid")
+            func.NameAdder(selected_Type)
+            window.close()
+            window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
+        else:
+            func.NameAdder(selected_Type)
+            window.close()
+            window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
+
+        
         
 
     

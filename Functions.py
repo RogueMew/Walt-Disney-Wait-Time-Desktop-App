@@ -1,12 +1,20 @@
 import requests as web
 import data as data
 import PySimpleGUI as psg
-
+import json as jason
 
 
 ParkjasonRaw = ""
 ParkJasonRefined = ""
 firstItem = "" 
+
+def isValidJason(text):
+    try:
+        jason.loads(text)
+        return True
+    except jason.JSONDecodeError:
+        return False
+
 
 def JSONLooader(Park):
     global ParkjasonRaw, ParkJasonRefined
@@ -21,6 +29,16 @@ def NameAdder(Type):
             if len(temp["liveData"]) > 0:
                 if temp["liveData"][0]["status"] != "OPERATING":
                     data.Ride_Name.append(" --Closed-- " + rideNames["name"] + " --Closed--")
+                else:
+                    data.Ride_Name.append(rideNames["name"])
+            else:
+                data.Ride_Name.append("--Unknown Status-- " + rideNames["name"] + " --Unknown Status--")
+        if Type == "--WIP-- Shows --WIP--" and rideNames["entityType"] == "SHOW":
+            temp = web.get(data.Ride_Time_URL.format(rideNames["id"]))
+            temp = temp.json()
+            if len(temp["liveData"]) > 0:
+                if temp["liveData"][0]["status"] != "OPERATING":
+                    data.Ride_Name.append(" --Not Running-- " + rideNames["name"] + " --Not Running--")
                 else:
                     data.Ride_Name.append(rideNames["name"])
             else:
@@ -81,8 +99,9 @@ def showTimeGetter(show):
             data.Show_Ids = show["id"]
             break
     temp = web.get(data.Ride_Time_URL.format(data.Show_Ids))
-    if len(temp.txt) > 0:
+    if len(temp.text) > 0 and isValidJason(temp.text):
         temp = temp.json()
+
         if "liveData" in temp:
             if len(temp["liveData"]) > 0:
                 if "showTimes" in temp["liveData"][0]:
