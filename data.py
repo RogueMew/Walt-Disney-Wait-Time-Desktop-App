@@ -67,7 +67,7 @@ parkTime = ""
 parkOperationOpen = ""
 parkOperationClosed = ""
 
-Type_Options = ["Rides", "--WIP-- Shows --WIP--", "--WIP-- Restaurants --WIP--"]
+Type_Options = ["Rides", "--DEV-- Shows --DEV--", "--WIP-- Restaurants --WIP--"]
 
 
 # Ride Vars

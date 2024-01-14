@@ -22,7 +22,7 @@ def layoutStack(layoutWanted):
     if layoutWanted == 3:
         layout3 = [
             [psg.Text("Disney Park App Tracker"), psg.Button("Back to Type Selection"),psg.Button("Exit")],
-            [psg.Text("Select Attraction Type:"), psg.OptionMenu(data.Ride_Name, key="-Ride-"), psg.Button("Select Attraction")]
+            [psg.Text("Select Attraction Type:"), psg.Combo(data.Ride_Name, key="-Ride-", enable_events=True, size=(75, 10)), psg.Button("Select Attraction")]
         ]
         return layout3
     

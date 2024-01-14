@@ -50,10 +50,11 @@ while True:
         window = psg.Window("{} Attraction Menu".format(data.selected_Park), layout= win.layoutStack(2))
     
     if event == "Select Type":
+        data.Ride_Name = []
         selected_Type = values["-Type-"] 
         if selected_Type == "--WIP-- Restaurants --WIP--":
-            psg.popup_error("This Function is A work in progress")
-        elif selected_Type == "--WIP-- Shows --WIP--":
+            psg.popup_error("This Function is A Future Item and does not lead anywhere")
+        elif selected_Type == "--DEV-- Shows --DEV--":
             psg.popup_error("This Function is in Devepment and may not work as intendid")
             func.NameAdder(selected_Type)
             window.close()
