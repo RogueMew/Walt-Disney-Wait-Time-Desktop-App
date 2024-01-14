@@ -36,7 +36,7 @@ Park App Tracker is a Python application designed to provide users with real-tim
 
 1. **Installation:**
    - Ensure you have Python installed on your system.
-   - Install required packages using `pip install -r requirements.txt`.
+   - Install required packages using `pip install -r requirements.txt` or launch the already provided installer under `FirstUse.py` which is open and allows you to view what packages are being installed in `requirements.txt`
 
 2. **Run the Application:**
    - Execute the main script: `python WaitTimeApp.py`.

@@ -5,8 +5,6 @@ All_Park_Ids_URL = "https://api.themeparks.wiki/v1/destinations"
 Entity_Data_URL = "https://api.themeparks.wiki/v1/entity/{}"
 
 
-
-
 Park_TimeZones = {
     "Disneyland": "America/Los_Angeles",
     "California Adventure": "America/Los_Angeles",
@@ -56,7 +54,7 @@ resortNames = [
     "Shanghai Disney Resort",
     "Disneyland Paris",
     "Disneyland Resort",
-    "Hong Kong Disneyland Parks"
+    "Hong Kong Disneyland Parks",
 ]
 
 
@@ -70,6 +68,9 @@ parkOperationOpen = ""
 parkOperationClosed = ""
 
 Type_Options = ["Rides", "--WIP-- Shows --WIP--", "--WIP-- Restaurants --WIP--"]
+
+
+# Ride Vars
 Ride_Name = []
 Ride_Ids = ""
 Ride_Closed = ""
@@ -94,3 +95,15 @@ lightningStart = ""
 lightningEnd = ""
 lightningPrice = ""
 lightningCurrency = ""
+
+#Restaruant Vars
+
+
+
+
+
+
+#Show Vars
+
+
+
