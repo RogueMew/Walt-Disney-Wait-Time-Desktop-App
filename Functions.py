@@ -27,13 +27,12 @@ def NameAdder(Type):
                 data.Ride_Name.append("--Unknown Status-- " + rideNames["name"] + " --Unknown Status--")
 
 def waitTimeGetter(ride):
-
     firstItem = ParkJasonRefined["children"]
     for rides in firstItem:
         if rides["name"] == ride:
             data.Ride_Ids = rides["id"]
             break
-    temp = web.get(data.Ride_Time_URL.format(data.Ride_Ids))
+    temp = web.get(data.Ride_Time_URL.format(data.Ride_Ids)) 
     if len(temp.text) > 0:
         temp = temp.json()
         if len(temp["liveData"]) > 0:
@@ -73,3 +72,28 @@ def waitTimeGetter(ride):
             psg.popup_error("The Ride has no data that can be read")    
     else:
         psg.popup_error("The Ride has no data that can be read")
+
+
+def showTimeGetter(show):
+    firstItem = ParkJasonRefined["children"]
+    for show in firstItem:
+        if show["name"] == show:
+            data.Show_Ids = show["id"]
+            break
+    temp = web.get(data.Ride_Time_URL.format(data.Show_Ids))
+    if len(temp.txt) > 0:
+        temp = temp.json()
+        if "liveData" in temp:
+            if len(temp["liveData"]) > 0:
+                if "showTimes" in temp["liveData"][0]:
+                    for Times in temp["liveData"][0]["showtimes"]:
+                        data.Show_Times.append(Times["startTime"].split("T")[-1].split("-+")[0])
+                        print("Done")
+                else:
+                    psg.popup_error("The Show has no data that can be read")  
+            else:
+                psg.popup_error("The Show has no data that can be read")
+        else:
+            psg.popup_error("The Show has no data that can be read")
+    else:
+        psg.popup_error("The Show has no data that can be read")

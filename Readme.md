@@ -25,7 +25,7 @@ Park App Tracker is a Python application designed to provide users with real-tim
 ## Usage Guidelines
 
 1. **Disclaimer:**
-   - Park App Tracker is an independent project and is not affiliated with or endorsed by any theme park. This application is developed by [Your Name] for personal use.
+   - Park App Tracker is an independent project and is not affiliated with or endorsed by any theme park. This application is developed by RogueMew for personal use.
 
 2. **Rules of Usage:**
    - Use Park App Tracker responsibly and in compliance with all applicable laws.

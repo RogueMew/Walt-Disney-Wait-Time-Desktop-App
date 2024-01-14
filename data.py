@@ -104,6 +104,6 @@ lightningCurrency = ""
 
 
 #Show Vars
-
-
-
+Show_Name = ""
+Show_Ids = ""
+Show_Times = []

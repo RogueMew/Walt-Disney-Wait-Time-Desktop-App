@@ -40,5 +40,3 @@ def layoutStack(layoutWanted):
             [psg.Text("Disney Park App Tracker"), psg.Button("Back to Park Selection"), psg.Button("Exit")]
         ]
         return layout5
-    
-    

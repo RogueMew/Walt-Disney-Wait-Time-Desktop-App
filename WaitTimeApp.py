@@ -50,20 +50,23 @@ while True:
         window = psg.Window("{} Attraction Menu".format(data.selected_Park), layout= win.layoutStack(2))
     
     if event == "Select Type":
-        selected_Type = values["-Type-"]
-        if selected_Type == "Rides":
-            func.NameAdder(selected_Type)
-            window.close()
-            window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
-        elif selected_Type == "--WIP-- Shows --WIP--" or selected_Type == "--WIP-- Restaurants --WIP--":
+        selected_Type = values["-Type-"] 
+        if selected_Type == "--WIP-- Restaurants --WIP--":
             psg.popup_error("This Function is A work in progress")
+        func.NameAdder(selected_Type)
+        window.close()
+        window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
+        
 
     
     if event == "Select Attraction":
         data.selected_Ride = values["-Ride-"]
-        func.waitTimeGetter(data.selected_Ride)
-        window.close()
-        window = psg.Window("{} Wait Times".format(data.selected_Ride),layout=win.layoutStack(4))
+        if selected_Type == "Rides":
+            func.waitTimeGetter(data.selected_Ride)
+            window.close()
+            window = psg.Window("{} Wait Times".format(data.selected_Ride),layout=win.layoutStack(4))
+        elif selected_Type == "--WIP-- Shows --WIP--":
+            func.showTimeGetter(data.selected_Ride)
     
     if event == "Back to {} Selection".format(data.selected_Type):
         window.close()
