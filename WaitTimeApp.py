@@ -63,11 +63,6 @@ while True:
             func.NameAdder(selected_Type)
             window.close()
             window = psg.Window("{} {} Choices".format(data.selected_Park, selected_Type), layout=win.layoutStack(3))
-
-        
-        
-
-    
     if event == "Select Attraction":
         data.selected_Ride = values["-Ride-"]
         if selected_Type == "Rides":
@@ -76,7 +71,6 @@ while True:
             window = psg.Window("{} Wait Times".format(data.selected_Ride),layout=win.layoutStack(4))
         elif selected_Type == "--WIP-- Shows --WIP--":
             func.showTimeGetter(data.selected_Ride)
-    
     if event == "Back to {} Selection".format(data.selected_Type):
         window.close()
         window = psg.Window("{} {} Choices".format(data.selected_Park, data.selected_Type), layout=win.layoutStack(3))
