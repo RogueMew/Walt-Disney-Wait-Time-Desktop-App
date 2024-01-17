@@ -1,7 +1,7 @@
 # Disney Park Wait Time Tracker Desktop App
 
 ## Disclaimer
-This desktop application is an original creation and is not affiliated with or endorsed by The Walt Disney Company. The app is an independent project developed by [Your Name]. It is designed to provide information about wait times for attractions at various Disney parks.
+This desktop application is an original creation and is not affiliated with or endorsed by The Walt Disney Company. The app is an independent project developed by RogueMew. It is designed to provide information about wait times for attractions at various Disney parks.
 
 ## Usage
 The app allows users to track wait times for rides, shows, and restaurants at different Disney parks. Users can select a park, choose the type of attraction, and view relevant details, including wait times.
