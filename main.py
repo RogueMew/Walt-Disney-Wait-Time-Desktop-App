@@ -171,8 +171,9 @@ class menuOptions:
 
 class RideData:
     Ride_Names = []
+    Ride_Ids = {}
     Ride_Name = ""
-    Ride_Ids = ""
+    Ride_Id = ""
     Ride_Closed = ""
     Ride_Status = ""
     selected_Ride = ""
@@ -275,10 +276,13 @@ class AttractionFuncs:
                     RideData.Ride_Names.append(
                         "--Unknown Status-- " + attractions["name"]
                     )
+                    RideData.Ride_Ids[f"--Unknown Status-- {attractions["name"]}"] = f"{attractions["id"]}"
                 elif temp["liveData"][0]["status"] != "OPERATING":
                     RideData.Ride_Names.append("-- Closed -- " + attractions["name"])
+                    RideData.Ride_Ids[f"-- Closed -- {attractions["name"]}"] = f"{attractions["id"]}"
                 else:
                     RideData.Ride_Names.append(attractions["name"])
+                    RideData.Ride_Ids[f"{attractions["name"]}"] = f"{attractions["id"]}"
             elif attractions["entityType"] == "SHOW":
                 temp = temp.json()
                 if len(temp["liveData"]) <= 0:
@@ -336,6 +340,8 @@ class ButtonFuncs:
         secondScreenFuncs.screenInit()
 
     def SelectRideFunc():
+        userVariables.selected_Ride = TempVars.TempRideSelection.get()
+        print(TempVars.TempRideSelection.get())
         if userVariables.selected_Type == "Rides":
             if WaitTimeFuncs.rideWaits() == False:
                 thirdScreen.removeWidgets()
@@ -344,8 +350,12 @@ class ButtonFuncs:
 class WaitTimeFuncs:
 
     def rideWaits():
-        temp = web.get(Urls.Ride_Time_URL.format(userVariables.selected_Ride))
+        print(userVariables.selected_Ride)
+        #temp = web.get(Urls.Ride_Time_URL.format(RideData.Ride_Ids[userVariables.selected_Ride]))
+
+        return
         if UtilityFuncs.jasonCheck(temp) == False:
+            
             psg.popup_error(f"Cannot Find any data on this particular {userVariables.selected_Type}\nThis could mean the data set is down or the request is not running correctly")
             return False
         temp = temp.json()
