@@ -14,8 +14,6 @@ def isValidJason(text):
         return True
     except jason.JSONDecodeError:
         return False
-
-
 def JSONLooader(Park):
     global ParkjasonRaw, ParkJasonRefined
     ParkjasonRaw = web.get(data.Ride_Ids_URL.format(data.Park_Ids[Park]))
