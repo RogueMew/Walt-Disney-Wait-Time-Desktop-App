@@ -6,7 +6,7 @@ import subprocess as NonWindows
 import ctypes as windowsManager
 import json as json
 import PySimpleGUI as psg
-
+import platform as OperatingSystem
 
 class resorts:
     resortNames = [
@@ -141,7 +141,7 @@ class ParkTimeInfo:
                         ParkTimeInfo.parkOpened = "Open"
                     else:
                         ParkTimeInfo.parkOpened = "Closed"
-    
+
     def resetData():
         ParkTimeInfo.parkWantedTimeZone = None
         ParkTimeInfo.SpecialEvent = False
@@ -208,6 +208,7 @@ class userVariables:
     selected_Park = ""
     selected_Type = ""
     selected_Ride = ""
+    selected_RideId = ""
 
 
 class UnixBasedSystems:
@@ -243,6 +244,12 @@ class UtilityFuncs:
             return True
         except web.ConnectionError or web.ConnectTimeout:
             return False
+    
+    def MinimizeTerminal():
+        if OperatingSystem.system() == "Linux" or OperatingSystem.system() == "Darwin":
+            UnixBasedSystems.AppleLinuxMinimizeTerminal()
+        elif OperatingSystem.system() == "Windows":
+            WindowsBasedSystems.terminalMiniWIN()
 
 
 class AttractionFuncs:
@@ -276,13 +283,10 @@ class AttractionFuncs:
                     RideData.Ride_Names.append(
                         "--Unknown Status-- " + attractions["name"]
                     )
-                    RideData.Ride_Ids[f"--Unknown Status-- {attractions["name"]}"] = f"{attractions["id"]}"
                 elif temp["liveData"][0]["status"] != "OPERATING":
                     RideData.Ride_Names.append("-- Closed -- " + attractions["name"])
-                    RideData.Ride_Ids[f"-- Closed -- {attractions["name"]}"] = f"{attractions["id"]}"
                 else:
                     RideData.Ride_Names.append(attractions["name"])
-                    RideData.Ride_Ids[f"{attractions["name"]}"] = f"{attractions["id"]}"
             elif attractions["entityType"] == "SHOW":
                 temp = temp.json()
                 if len(temp["liveData"]) <= 0:
@@ -312,6 +316,7 @@ class AttractionFuncs:
 class TempVars:
     TempParkSelection = customtkinter.StringVar()
     TempRideSelection = customtkinter.StringVar()
+    TempErrorCheck = True
 
 
 class ButtonFuncs:
@@ -341,39 +346,55 @@ class ButtonFuncs:
 
     def SelectRideFunc():
         userVariables.selected_Ride = TempVars.TempRideSelection.get()
-        print(TempVars.TempRideSelection.get())
+
+        
         if userVariables.selected_Type == "Rides":
-            if WaitTimeFuncs.rideWaits() == False:
+            WaitTimeFuncs.rideWaits()
+            if TempVars.TempErrorCheck == True:
                 thirdScreen.removeWidgets()
+                fourthScreen.screenInit()
+    def backRide():
+        fourthScreen.removeWidgets()
+        thirdScreen.screenInit()
 
 
 class WaitTimeFuncs:
-
     def rideWaits():
-        print(userVariables.selected_Ride)
-        #temp = web.get(Urls.Ride_Time_URL.format(RideData.Ride_Ids[userVariables.selected_Ride]))
-
-        return
+        userVariables.selected_Ride = TempVars.TempRideSelection.get()
+        for attractions in AttractionFuncs.parkJason["children"]:
+            if attractions["name"] == userVariables.selected_Ride:
+                userVariables.selected_RideId = attractions["id"]
+                break
+        temp = web.get(Urls.Ride_Time_URL.format(userVariables.selected_RideId))
         if UtilityFuncs.jasonCheck(temp) == False:
-            
-            psg.popup_error(f"Cannot Find any data on this particular {userVariables.selected_Type}\nThis could mean the data set is down or the request is not running correctly")
-            return False
+            psg.popup_error(
+                f"Cannot Find any data on this particular {userVariables.selected_Type}\nThis could mean the data set is not JSON"
+            )
+            TempVars.TempErrorCheck = False
+            return 
         temp = temp.json()
-        if "liveDate" not in temp:
-            psg.popup_error(f"Cannot Find any data on this particular {userVariables.selected_Type}\nThis could mean the data set is down or the request is not running correctly")
-            return False
+        if "liveData" not in temp:
+            psg.popup_error(
+                f"Cannot Find any data on this particular {userVariables.selected_Type}\nThis could mean the data set is down or the request is not running correctly"
+            )
+            TempVars.TempErrorCheck = False
+            return 
         if "queue" not in temp["liveData"][0]:
-            psg.popup_error(f"The {userVariables.selected_Type} is not responding with any data in terms of wait time")
-            return False
+            psg.popup_error(
+                f"The {userVariables.selected_Type} is not responding with any data in terms of wait time"
+            )
+            TempVars.TempErrorCheck = False
+            return
         temp = temp["liveData"][0]["queue"]
-        
         if "STANDBY" in temp:
-            RideData.standby = temp["STANDBY"]["STANDBY"]
+            RideData.standby = temp["STANDBY"]["waitTime"]
         if "SINGLE_RIDER" in temp:
-            RideData.single = temp["SINGLE_RIDER"]["Single_Rider"]
+            RideData.single = temp["SINGLE_RIDER"]["waitTime"]
         if "PAID_RETURN_TIME" in temp:
             if "price" in temp["PAID_RETURN_TIME"]:
-                RideData.lightningCurrency = temp["PAID_RETURN_TIME"]["price"]["currency"]
+                RideData.lightningCurrency = temp["PAID_RETURN_TIME"]["price"][
+                    "currency"
+                ]
                 RideData.lightningPrice = temp["PAID_RETURN_TIME"]["price"]["amount"]
             RideData.lightningState = temp["PAID_RETURN_TIME"]["state"]
             RideData.lightningStart = temp["PAID_RETURN_TIME"]["returnStart"]
@@ -384,8 +405,6 @@ class WaitTimeFuncs:
             RideData.boardingEnd = temp["BOARDING_GROUP"]["currentGroupEnd"]
             RideData.boardingTime = temp["BOARDING_GROUP"]["estimatedWait"]
             RideData.boardingNext = temp["BOARDING_GROUP"]["nextAllocationTime"]
-        return True
-
 
 # App Screens
 class firstScreenFuncs:
@@ -424,7 +443,7 @@ class firstScreenFuncs:
     def removeWidgets():
         for widgets in app.winfo_children():
             widgets.destroy()
-    
+
 
 class secondScreenFuncs:
     def screenInit():
@@ -472,6 +491,9 @@ class secondScreenFuncs:
             app, text="Back", command=ButtonFuncs.BackMain
         )
         BackButton.grid(row=2, column=0, sticky="ew")
+        #Seperator
+        Seperator = customtkinter.CTkLabel(app, text=" ")
+        Seperator.grid(row=2, column=1, sticky="ew")
         # Exit Button
         ExitButton = customtkinter.CTkButton(app, text="Exit", command=lambda: exit())
         ExitButton.grid(row=2, column=2, sticky="ew")
@@ -486,6 +508,7 @@ class thirdScreen:
         app.title(
             f"Wait Time App - {userVariables.selected_Park} - {userVariables.selected_Type}"
         )
+        app.geometry("600x300")
         app.grid_columnconfigure((0, 1, 2), weight=1)
         app.grid_rowconfigure((0, 1, 2), weight=1)
 
@@ -507,12 +530,21 @@ class thirdScreen:
                 variable=TempVars.TempRideSelection,
                 values=RestaurantData.Restaurant_Names,
             )
-        RideChoiceMenu.grid(row=1, column=1, sticky="ew")
-        RideChoiceButton = customtkinter.CTkButton(app, text= f"Select {userVariables.selected_Type}", command=WaitTimeFuncs.rideWaits)
-        RideChoiceButton.grid(row = 1, column=3)
+        RideChoiceMenu.grid(row=1, column=1, columnspan=2)
+        RideChoiceButton = customtkinter.CTkButton(
+            app,
+            text=f"Select {userVariables.selected_Type}",
+            command=ButtonFuncs.SelectRideFunc,
+        )
+        RideChoiceButton.grid(row=1, column=3)
         # Back Button
-        BackButton = customtkinter.CTkButton(app, text="Back", command=ButtonFuncs.backType)
+        BackButton = customtkinter.CTkButton(
+            app, text="Back", command=ButtonFuncs.backType
+        )
         BackButton.grid(row=2, column=0, sticky="ew")
+        #Seperator
+        Seperator = customtkinter.CTkLabel(app, text=" ")
+        Seperator.grid(row=2, column=1, sticky="ew")
         # Exit Button
         ExitButton = customtkinter.CTkButton(app, text="Exit", command=lambda: exit())
         ExitButton.grid(row=2, column=2, sticky="ew")
@@ -522,11 +554,100 @@ class thirdScreen:
             widgets.destroy()
 
 
-if UtilityFuncs.wifiCheck():
-    firstScreenFuncs.screenInit()
-    app.mainloop()
-else:
-    psg.popup_error(
-        "Having issues connecting to the internet\n Retry when you are connected",
-        title="Error 404 - Connectivity Error",
-    )
+class fourthScreen:
+    def screenInit():
+        app.title(
+            f"Wait Time App - {userVariables.selected_Park} - {userVariables.selected_Type}"
+        )
+        app.geometry("900x600")
+        app.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
+        app.grid_rowconfigure((0, 1, 2, 3), weight=1)
+
+        # StandBy
+        StandByLabel = customtkinter.CTkLabel(
+            app, text=f"Standby Time (min)\n{RideData.standby}"
+        )
+        StandByLabel.grid(row=0, column=1)
+
+        # Single
+        SingleLabel = customtkinter.CTkLabel(
+            app, text=f"Single Rider Wait Time (min)\n{RideData.single}"
+        )
+        SingleLabel.grid(row=0, column=3)
+
+        # Lightning
+        LightningStatus = customtkinter.CTkLabel(
+            app, text=f"Lightning Lane Status\n{RideData.lightningState}"
+        )
+        LightningStatus.grid(row=1, column=0)
+
+        LightningPrice = customtkinter.CTkLabel(
+            app,
+            text=f"Lightning Lane Price\n{RideData.lightningPrice} {RideData.lightningCurrency}",
+        )
+        LightningPrice.grid(row=1, column=1)
+
+        LightningStart = customtkinter.CTkLabel(
+            app, text=f"Lightning Lane Start Time\n{RideData.lightningStart}"
+        )
+        LightningStart.grid(row=1, column=2)
+
+        lightningEnd = customtkinter.CTkLabel(
+            app, text=f"Lightning Lane End Time\n{RideData.lightningEnd}"
+        )
+        lightningEnd.grid(row=1, column=3)
+
+        # Boarding Group
+        BoardingStatus = customtkinter.CTkLabel(
+            app, text=f"Boarding Group Status\n{RideData.boardingState}"
+        )
+        BoardingStatus.grid(row=2, column=0)
+
+        BoardingStart = customtkinter.CTkLabel(
+            app, text=f"Boarding Group Start\n{RideData.boardingStart}"
+        )
+        BoardingStart.grid(row=2, column=1)
+
+        BoardingEnd = customtkinter.CTkLabel(
+            app, text=f"Boarding Group End\n{RideData.boardingEnd}"
+        )
+        BoardingEnd.grid(row=2, column=2)
+
+        BoardingTime = customtkinter.CTkLabel(
+            app, text=f"Boarding Group Wait Time (min)\n{RideData.boardingTime}"
+        )
+        BoardingTime.grid(row=2, column=3)
+
+        boardingNext = customtkinter.CTkLabel(
+            app, text=f"Boarding Group Next Time\n{RideData.boardingNext}"
+        )
+        boardingNext.grid(row=2, column=4)
+        # Back Button
+        BackButton = customtkinter.CTkButton(
+            app, text="Back", command=ButtonFuncs.backRide
+        )
+        BackButton.grid(row=4, column=1, sticky="ew")
+        #Seperator
+        Seperator = customtkinter.CTkLabel(app, text=" ")
+        Seperator.grid(row=4, column=2, sticky="ew")
+        # Exit Button
+        ExitButton = customtkinter.CTkButton(app, text="Exit", command=lambda: exit())
+        ExitButton.grid(row=4, column=3, sticky="ew")
+
+    def removeWidgets():
+        for widgets in app.winfo_children():
+            widgets.destroy()
+
+class AppInit:
+    def App():
+        if UtilityFuncs.wifiCheck():
+            UtilityFuncs.MinimizeTerminal()
+            firstScreenFuncs.screenInit()
+            app.mainloop()
+        else:
+            psg.popup_error(
+                "Having issues connecting to the internet\n Retry when you are connected",
+                title="Error 404 - Connectivity Error",
+            )
+
+AppInit.App()

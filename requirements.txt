@@ -1,7 +1,4 @@
-# requirements.txt
-
-# PySimpleGUI for creating the graphical user interface
-PySimpleGUI==4.45.0
-
-# Requests for making HTTP requests to the Themeparks API
-requests==2.26.0
+customtkinter
+requests
+pytz
+PySimpleGUI
