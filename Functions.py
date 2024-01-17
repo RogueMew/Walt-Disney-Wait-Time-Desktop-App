@@ -18,7 +18,6 @@ def JSONLooader(Park):
     global ParkjasonRaw, ParkJasonRefined
     ParkjasonRaw = web.get(data.Ride_Ids_URL.format(data.Park_Ids[Park]))
     ParkJasonRefined = ParkjasonRaw.json()
-
 def NameAdder(Type):
     for rideNames in ParkJasonRefined["children"]:
         if Type == "Rides" and rideNames["entityType"] == "ATTRACTION":
@@ -88,8 +87,6 @@ def waitTimeGetter(ride):
             psg.popup_error("The Ride has no data that can be read")    
     else:
         psg.popup_error("The Ride has no data that can be read")
-
-
 def showTimeGetter(show):
     firstItem = ParkJasonRefined["children"]
     for show in firstItem:
