@@ -1,61 +1,26 @@
-# Park App Tracker
+# Disney Park Wait Time Tracker Desktop App
 
-Park App Tracker is a Python application designed to provide users with real-time information about attractions in various theme parks. The application allows users to track wait times, view attraction details, and navigate through different park and attraction types.
+## Disclaimer
+This desktop application is an original creation and is not affiliated with or endorsed by The Walt Disney Company. The app is an independent project developed by RogueMew. It is designed to provide information about wait times for attractions at various Disney parks.
 
-## Features
+## Usage
+The app allows users to track wait times for rides, shows, and restaurants at different Disney parks. Users can select a park, choose the type of attraction, and view relevant details, including wait times.
 
-1. **Attraction Type Selection:**
-   - Users can choose a park and select different attraction types seamlessly.
+## How to Use
+1. Run the application.
+2. Select a Disney park.
+3. Choose the type of attraction (Rides, Shows, or Restaurants).
+4. Explore detailed information about the selected attraction.
 
-2. **Attraction Status Details:**
-   - Detailed information about selected attractions, including standby wait time, single rider wait time, and available Lightning Lane details.
+## Important Note
+This application relies on internet connectivity to fetch real-time data about attraction wait times. Please ensure that your device is connected to the internet for accurate information.
 
-3. **User-friendly Navigation:**
-   - "Back" buttons for easy navigation between park, attraction type, and attraction selection screens.
+## Development
+The app is developed using Python and relies on various libraries, including PySimpleGUI. Feel free to explore and modify the code to suit your needs.
 
-4. **Park Time Zones:**
-   - Support for park time zones to enhance accuracy in ride schedules and live data.
+## Acknowledgments
+- [PySimpleGUI](https://pysimplegui.readthedocs.io/) - GUI framework for Python
+- [Requests](https://docs.python-requests.org/en/latest/) - HTTP library for Python
 
-5. **Internet Connection Check:**
-   - Robust internet connection check at startup to ensure seamless data retrieval.
-
-6. **Bug Fixes and General Improvements:**
-   - Resolved issues related to ride status updates and fixed layout inconsistencies for a smoother user experience.
-
-## Usage Guidelines
-
-1. **Disclaimer:**
-   - Park App Tracker is an independent project and is not affiliated with or endorsed by any theme park. This application is developed by RogueMew for personal use.
-
-2. **Rules of Usage:**
-   - Use Park App Tracker responsibly and in compliance with all applicable laws.
-   - Do not use the application for any commercial purposes or to disseminate inaccurate information.
-   - Respect the terms of use of the data provider (Themeparks API) and adhere to their policies.
-
-## Getting Started
-
-1. **Installation:**
-   - Ensure you have Python installed on your system.
-   - Install required packages using `pip install -r requirements.txt` or launch the already provided installer under `FirstUse.py` which is open and allows you to view what packages are being installed in `requirements.txt`
-
-2. **Run the Application:**
-   - Execute the main script: `python WaitTimeApp.py`.
-
-3. **Select Park and Explore:**
-   - Follow on-screen instructions to select a park, explore attraction types, and check wait times.
-
-## Known Issues
-
-1. Users may experience delays in data retrieval during peak usage times.
-2. Some attraction status details may not be available in real-time, leading to occasional discrepancies.
-
-## Future Plans
-
-1. Ongoing improvements to enhance performance and user experience.
-2. Integration of additional features, such as crowd predictions and weather updates.
-
-## Feedback
-
-Thank you for using Park App Tracker! We appreciate your feedback and encourage you to report any issues or suggest enhancements for future updates.
-
----
+## License
+This application is open-source and available under the [MIT License](LICENSE).
