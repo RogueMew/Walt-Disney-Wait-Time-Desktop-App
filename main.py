@@ -7,7 +7,7 @@ import ctypes as windowsManager
 import json as json
 import PySimpleGUI as psg
 import platform as OperatingSystem
-
+import os
 class resorts:
     resortNames = [
         "Walt Disney World® Resort",
@@ -410,7 +410,7 @@ class WaitTimeFuncs:
 class firstScreenFuncs:
     def screenInit():
         app.title("Wait Time App")
-        app.geometry("528x275")
+        app.geometry("550x275")
         app.resizable(False,False)
         app.grid_columnconfigure((0, 1, 2), weight=1)
         app.grid_rowconfigure(
@@ -484,9 +484,9 @@ class secondScreenFuncs:
         else:
             ParkOpened.grid_forget()
             ClosedLabel = customtkinter.CTkLabel(
-                app, text=f"The Park is {ParkTimeInfo.parkOpened}"
+                app, text=f"{ParkTimeInfo.parkOpened}"
             )
-            ClosedLabel.grid(row=1, column=1)
+            ClosedLabel.grid(row=1, column=0, sticky="ew", columnspan=3, padx=225)
         # Back Button
         BackButton = customtkinter.CTkButton(
             app, text="Back", command=ButtonFuncs.BackMain,width=264, 
@@ -507,7 +507,7 @@ class thirdScreen:
         app.title(
             f"Wait Time App - {userVariables.selected_Park} - {userVariables.selected_Type}"
         )
-        app.geometry("528x275")
+        app.geometry("550x275")
         app.grid_columnconfigure((0, 1, 2), weight=1)
         app.grid_rowconfigure((0, 1, 2), weight=1)
 
@@ -565,19 +565,19 @@ class fourthScreen:
         standSingleFrame = customtkinter.CTkFrame(app)
         standSingleFrame.grid(row=0, column=0, columnspan=5, sticky="nsew")
         standSingleFrame.grid_columnconfigure((0, 1), weight=1)
-        StandByLabel = customtkinter.CTkLabel(standSingleFrame, text="\nStandby Time (min)\n120\n")
+        StandByLabel = customtkinter.CTkLabel(standSingleFrame, text=f"\nStandby Time (min)\n{RideData.standby}\n")
         StandByLabel.grid(row=0, column=0, padx=50)
-        SingleLabel = customtkinter.CTkLabel(standSingleFrame, text="\nSingle Rider Wait Time (min)\n120\n")
+        SingleLabel = customtkinter.CTkLabel(standSingleFrame, text=f"\nSingle Rider Wait Time (min)\n{RideData.single}\n")
         SingleLabel.grid(row=0, column=1, padx=50)
 
         # Lightning Lane Frame
         LightningFrame = customtkinter.CTkFrame(app)
         LightningFrame.grid(row=1, column=0, columnspan=5, sticky="nsew")
         LightningFrame.grid_columnconfigure((0, 1, 2, 3), weight=1)
-        LightningStatusLabel = customtkinter.CTkLabel(LightningFrame, text="\nLightning Lane Status\n120\n")
-        LightningPriceLabel = customtkinter.CTkLabel(LightningFrame, text="\nLightning Lane Price\n120\n")
-        LightningStartLabel = customtkinter.CTkLabel(LightningFrame, text="\nLightning Lane Start Time\n120\n")
-        LightningEndLabel = customtkinter.CTkLabel(LightningFrame, text="\nLightning Lane End Time\n120\n")
+        LightningStatusLabel = customtkinter.CTkLabel(LightningFrame, text=f"\nLightning Lane Status\n{RideData.boardingState}\n")
+        LightningPriceLabel = customtkinter.CTkLabel(LightningFrame, text=f"\nLightning Lane Price\n{RideData.lightningPrice} {RideData.lightningCurrency}\n")
+        LightningStartLabel = customtkinter.CTkLabel(LightningFrame, text=f"\nLightning Lane Start Time\n{RideData.lightningStart}\n")
+        LightningEndLabel = customtkinter.CTkLabel(LightningFrame, text=f"\nLightning Lane End Time\n{RideData.lightningEnd}\n")
         LightningStatusLabel.grid(row=1, column=0, padx=25)
         LightningPriceLabel.grid(row=1, column=1, padx=25)
         LightningStartLabel.grid(row=1, column=2, padx=25)
@@ -587,16 +587,14 @@ class fourthScreen:
         BoardingFrame = customtkinter.CTkFrame(app)
         BoardingFrame.grid(row=2, column=0, columnspan=5, sticky="nsew")
         BoardingFrame.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
-        BoardingStatusLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group Status\n120\n")
-        BoardingPriceLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group Price\n120\n")
-        BoardingStartLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group Start Time\n120\n")
-        BoardingEndLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group End Time\n120\n")
-        BoardingNextLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group Next Time\n120\n")
+        BoardingStatusLabel = customtkinter.CTkLabel(BoardingFrame, text=f"\nBoarding Group Status\n{RideData.boardingState}\n")
+        BoardingStartLabel = customtkinter.CTkLabel(BoardingFrame, text=f"\nBoarding Group Start Time\n{RideData.boardingStart}\n")
+        BoardingWaitLabel = customtkinter.CTkLabel(BoardingFrame, text=f"\nBoarding Group Wait Time\n{RideData.boardingTime}\n")
+        BoardingNextLabel = customtkinter.CTkLabel(BoardingFrame, text=f"\nBoarding Group Next Time\n{RideData.boardingNext}\n")
         BoardingStatusLabel.grid(row=1, column=0, padx=10)
-        BoardingPriceLabel.grid(row=1, column=1, padx=10)
-        BoardingStartLabel.grid(row=1, column=2, padx=10)
-        BoardingEndLabel.grid(row=1, column=3, padx=10)
-        BoardingNextLabel.grid(row=1, column=4, padx=10)
+        BoardingStartLabel.grid(row=1, column=1, padx=10)
+        BoardingWaitLabel.grid(row=1, column=2, padx=10)
+        BoardingNextLabel.grid(row=1, column=3, padx=10)
 
         # Back Button
         BackButton = customtkinter.CTkButton(

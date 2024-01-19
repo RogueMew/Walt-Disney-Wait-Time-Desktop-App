@@ -410,7 +410,7 @@ class WaitTimeFuncs:
 class firstScreenFuncs:
     def screenInit():
         app.title("Wait Time App")
-        app.geometry("528x275")
+        app.geometry("550x275")
         app.resizable(False,False)
         app.grid_columnconfigure((0, 1, 2), weight=1)
         app.grid_rowconfigure(
@@ -484,9 +484,9 @@ class secondScreenFuncs:
         else:
             ParkOpened.grid_forget()
             ClosedLabel = customtkinter.CTkLabel(
-                app, text=f"The Park is {ParkTimeInfo.parkOpened}"
+                app, text=f"{ParkTimeInfo.parkOpened}"
             )
-            ClosedLabel.grid(row=1, column=1)
+            ClosedLabel.grid(row=1, column=0, sticky="ew", columnspan=3, padx=225)
         # Back Button
         BackButton = customtkinter.CTkButton(
             app, text="Back", command=ButtonFuncs.BackMain,width=264, 
@@ -507,7 +507,7 @@ class thirdScreen:
         app.title(
             f"Wait Time App - {userVariables.selected_Park} - {userVariables.selected_Type}"
         )
-        app.geometry("528x275")
+        app.geometry("550x275")
         app.grid_columnconfigure((0, 1, 2), weight=1)
         app.grid_rowconfigure((0, 1, 2), weight=1)
 
