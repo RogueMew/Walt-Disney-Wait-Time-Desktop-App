@@ -325,7 +325,7 @@ class ButtonFuncs:
         if userVariables.selected_Park != "":
             ParkTimeInfo.parkStatusChecker()
             firstScreenFuncs.removeWidgets()
-            app.title(f"Wait Time App - {userVariables.selected_Park} - Loading..")
+            app.title(f"Wait Time App - {userVariables.selected_Park} - Loading...")
             if ParkTimeInfo.parkOpened == "Open":
                 AttractionFuncs.jasonLoader()
                 AttractionFuncs.NameAdder()
@@ -410,7 +410,8 @@ class WaitTimeFuncs:
 class firstScreenFuncs:
     def screenInit():
         app.title("Wait Time App")
-        app.geometry("600x300")
+        app.geometry("528x275")
+        app.resizable(False,False)
         app.grid_columnconfigure((0, 1, 2), weight=1)
         app.grid_rowconfigure(
             (
@@ -437,8 +438,8 @@ class firstScreenFuncs:
         )
         ParkSelectionButton.grid(row=1, column=2)
         # Exit Button
-        ExitButton = customtkinter.CTkButton(app, text="Exit", command=lambda: exit())
-        ExitButton.grid(row=2, column=1, sticky="ew")
+        ExitButton = customtkinter.CTkButton(app, text="Exit",width=528, command=lambda: exit())
+        ExitButton.grid(row=2, column=0, columnspan = 3,padx=0)
 
     def removeWidgets():
         for widgets in app.winfo_children():
@@ -488,15 +489,13 @@ class secondScreenFuncs:
             ClosedLabel.grid(row=1, column=1)
         # Back Button
         BackButton = customtkinter.CTkButton(
-            app, text="Back", command=ButtonFuncs.BackMain
+            app, text="Back", command=ButtonFuncs.BackMain,width=264, 
         )
-        BackButton.grid(row=2, column=0, sticky="ew")
-        #Seperator
-        Seperator = customtkinter.CTkLabel(app, text=" ")
-        Seperator.grid(row=2, column=1, sticky="ew")
+        BackButton.grid(row=2, column=0, sticky="ew", padx=0)
+
         # Exit Button
-        ExitButton = customtkinter.CTkButton(app, text="Exit", command=lambda: exit())
-        ExitButton.grid(row=2, column=2, sticky="ew")
+        ExitButton = customtkinter.CTkButton(app, text="Exit",width=264,  command=lambda: exit())
+        ExitButton.grid(row=2, column=2, sticky="ew", padx=0)
 
     def removeWidgets():
         for widgets in app.winfo_children():
@@ -508,7 +507,7 @@ class thirdScreen:
         app.title(
             f"Wait Time App - {userVariables.selected_Park} - {userVariables.selected_Type}"
         )
-        app.geometry("600x300")
+        app.geometry("528x275")
         app.grid_columnconfigure((0, 1, 2), weight=1)
         app.grid_rowconfigure((0, 1, 2), weight=1)
 
@@ -539,15 +538,14 @@ class thirdScreen:
         RideChoiceButton.grid(row=1, column=3)
         # Back Button
         BackButton = customtkinter.CTkButton(
-            app, text="Back", command=ButtonFuncs.backType
+            app, text="Back", command=ButtonFuncs.backType, width=264
         )
-        BackButton.grid(row=2, column=0, sticky="ew")
+        BackButton.grid(row=2, column=0, sticky="ew",columnspan=2, padx=0)
         #Seperator
-        Seperator = customtkinter.CTkLabel(app, text=" ")
-        Seperator.grid(row=2, column=1, sticky="ew")
+        
         # Exit Button
-        ExitButton = customtkinter.CTkButton(app, text="Exit", command=lambda: exit())
-        ExitButton.grid(row=2, column=2, sticky="ew")
+        ExitButton = customtkinter.CTkButton(app, text="Exit", width=264,command=lambda: exit())
+        ExitButton.grid(row=2, column=2,sticky="ew" , columnspan=2,padx=0)
 
     def removeWidgets():
         for widgets in app.winfo_children():
@@ -559,80 +557,58 @@ class fourthScreen:
         app.title(
             f"Wait Time App - {userVariables.selected_Park} - {userVariables.selected_Type}"
         )
-        app.geometry("900x600")
+        app.geometry("800x500")
         app.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
         app.grid_rowconfigure((0, 1, 2, 3), weight=1)
 
-        # StandBy
-        StandByLabel = customtkinter.CTkLabel(
-            app, text=f"Standby Time (min)\n{RideData.standby}"
-        )
-        StandByLabel.grid(row=0, column=1)
+        # Standby and Single Rider Frame
+        standSingleFrame = customtkinter.CTkFrame(app)
+        standSingleFrame.grid(row=0, column=0, columnspan=5, sticky="nsew")
+        standSingleFrame.grid_columnconfigure((0, 1), weight=1)
+        StandByLabel = customtkinter.CTkLabel(standSingleFrame, text="\nStandby Time (min)\n120\n")
+        StandByLabel.grid(row=0, column=0, padx=50)
+        SingleLabel = customtkinter.CTkLabel(standSingleFrame, text="\nSingle Rider Wait Time (min)\n120\n")
+        SingleLabel.grid(row=0, column=1, padx=50)
 
-        # Single
-        SingleLabel = customtkinter.CTkLabel(
-            app, text=f"Single Rider Wait Time (min)\n{RideData.single}"
-        )
-        SingleLabel.grid(row=0, column=3)
+        # Lightning Lane Frame
+        LightningFrame = customtkinter.CTkFrame(app)
+        LightningFrame.grid(row=1, column=0, columnspan=5, sticky="nsew")
+        LightningFrame.grid_columnconfigure((0, 1, 2, 3), weight=1)
+        LightningStatusLabel = customtkinter.CTkLabel(LightningFrame, text="\nLightning Lane Status\n120\n")
+        LightningPriceLabel = customtkinter.CTkLabel(LightningFrame, text="\nLightning Lane Price\n120\n")
+        LightningStartLabel = customtkinter.CTkLabel(LightningFrame, text="\nLightning Lane Start Time\n120\n")
+        LightningEndLabel = customtkinter.CTkLabel(LightningFrame, text="\nLightning Lane End Time\n120\n")
+        LightningStatusLabel.grid(row=1, column=0, padx=25)
+        LightningPriceLabel.grid(row=1, column=1, padx=25)
+        LightningStartLabel.grid(row=1, column=2, padx=25)
+        LightningEndLabel.grid(row=1, column=3, padx=25)
 
-        # Lightning
-        LightningStatus = customtkinter.CTkLabel(
-            app, text=f"Lightning Lane Status\n{RideData.lightningState}"
-        )
-        LightningStatus.grid(row=1, column=0)
+        # Boarding Group Frame
+        BoardingFrame = customtkinter.CTkFrame(app)
+        BoardingFrame.grid(row=2, column=0, columnspan=5, sticky="nsew")
+        BoardingFrame.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
+        BoardingStatusLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group Status\n120\n")
+        BoardingPriceLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group Price\n120\n")
+        BoardingStartLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group Start Time\n120\n")
+        BoardingEndLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group End Time\n120\n")
+        BoardingNextLabel = customtkinter.CTkLabel(BoardingFrame, text="\nBoarding Group Next Time\n120\n")
+        BoardingStatusLabel.grid(row=1, column=0, padx=10)
+        BoardingPriceLabel.grid(row=1, column=1, padx=10)
+        BoardingStartLabel.grid(row=1, column=2, padx=10)
+        BoardingEndLabel.grid(row=1, column=3, padx=10)
+        BoardingNextLabel.grid(row=1, column=4, padx=10)
 
-        LightningPrice = customtkinter.CTkLabel(
-            app,
-            text=f"Lightning Lane Price\n{RideData.lightningPrice} {RideData.lightningCurrency}",
-        )
-        LightningPrice.grid(row=1, column=1)
-
-        LightningStart = customtkinter.CTkLabel(
-            app, text=f"Lightning Lane Start Time\n{RideData.lightningStart}"
-        )
-        LightningStart.grid(row=1, column=2)
-
-        lightningEnd = customtkinter.CTkLabel(
-            app, text=f"Lightning Lane End Time\n{RideData.lightningEnd}"
-        )
-        lightningEnd.grid(row=1, column=3)
-
-        # Boarding Group
-        BoardingStatus = customtkinter.CTkLabel(
-            app, text=f"Boarding Group Status\n{RideData.boardingState}"
-        )
-        BoardingStatus.grid(row=2, column=0)
-
-        BoardingStart = customtkinter.CTkLabel(
-            app, text=f"Boarding Group Start\n{RideData.boardingStart}"
-        )
-        BoardingStart.grid(row=2, column=1)
-
-        BoardingEnd = customtkinter.CTkLabel(
-            app, text=f"Boarding Group End\n{RideData.boardingEnd}"
-        )
-        BoardingEnd.grid(row=2, column=2)
-
-        BoardingTime = customtkinter.CTkLabel(
-            app, text=f"Boarding Group Wait Time (min)\n{RideData.boardingTime}"
-        )
-        BoardingTime.grid(row=2, column=3)
-
-        boardingNext = customtkinter.CTkLabel(
-            app, text=f"Boarding Group Next Time\n{RideData.boardingNext}"
-        )
-        boardingNext.grid(row=2, column=4)
         # Back Button
         BackButton = customtkinter.CTkButton(
             app, text="Back", command=ButtonFuncs.backRide
         )
-        BackButton.grid(row=4, column=1, sticky="ew")
-        #Seperator
+        BackButton.grid(row=3, column=0, columnspan=5, sticky="ew")
+        # Seperator
         Seperator = customtkinter.CTkLabel(app, text=" ")
-        Seperator.grid(row=4, column=2, sticky="ew")
+        Seperator.grid(row=4, column=0, columnspan=5, sticky="ew")
         # Exit Button
         ExitButton = customtkinter.CTkButton(app, text="Exit", command=lambda: exit())
-        ExitButton.grid(row=4, column=3, sticky="ew")
+        ExitButton.grid(row=5, column=0, columnspan=5, sticky="ew")
 
     def removeWidgets():
         for widgets in app.winfo_children():
