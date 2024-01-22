@@ -437,6 +437,53 @@ class WaitTimeFuncs:
                 RideData.boardingEnd = temp["BOARDING_GROUP"]["currentGroupEnd"]
                 RideData.boardingTime = temp["BOARDING_GROUP"]["estimatedWait"]
                 RideData.boardingNext = temp["BOARDING_GROUP"]["nextAllocationTime"]
+
+    def showTimes():
+        userVariables.selected_Ride = TempVars.TempRideSelection.get()
+        for shows in AttractionFuncs.parkJason["children"]:
+            if shows["name"] == userVariables.selected_Ride:
+                userVariables.selected_RideId = shows["id"]
+                break
+        temp = web.get(Urls.Ride_Time_URL.format(userVariables.selected_RideId))
+        if(UtilityFuncs.jasonCheck(temp) == False):
+            psg.popup_error(
+                f"Cannot Find any data on this particular {userVariables.selected_Type}\nThis could mean the data set is not JSON"
+            )
+            TempVars.TempErrorCheck = False
+            return 
+        temp = temp.json()
+        if "liveData" not in temp:
+            psg.popup_error(
+                f"Cannot Find any data on this particular {userVariables.selected_Type}\nThis could mean the data set is not JSON"
+            )
+            TempVars.TempErrorCheck = False
+            return
+        if "queue" not in temp["liveData"][0]:
+            psg.popup_error(
+                f"Cannot Find any data on this particular {userVariables.selected_Type}\nThis could mean the data set is not JSON"
+            )
+            TempVars.TempErrorCheck = False
+            return 
+        temp = temp["liveData"][0]["queue"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # App Screens
 class firstScreenFuncs:
     def screenInit():
@@ -646,6 +693,9 @@ class fourthScreen:
 class AppInit:
     def App():
         if UtilityFuncs.wifiCheck():
+            os.system("git init")
+            os.system("git remote add origin https://github.com/mewtwo50002/Walt-Disney-Wait-Time-Desktop-App")
+            os.system("git pull origin main")
             UtilityFuncs.MinimizeTerminal()
             firstScreenFuncs.screenInit()
             app.mainloop()
