@@ -317,6 +317,11 @@ class TempVars:
     TempParkSelection = customtkinter.StringVar()
     TempRideSelection = customtkinter.StringVar()
     TempErrorCheck = True
+    TempList = []
+    tempString = ""
+    tempString2 = ""
+    tempInt = None
+    tempInt2 = None
 
 
 class ButtonFuncs:
@@ -388,24 +393,50 @@ class WaitTimeFuncs:
         temp = temp["liveData"][0]["queue"]
         if "STANDBY" in temp:
             RideData.standby = temp["STANDBY"]["waitTime"]
+        else:
+            RideData.standby = None
         if "SINGLE_RIDER" in temp:
             RideData.single = temp["SINGLE_RIDER"]["waitTime"]
+        else:
+            RideData.single = None
         if "PAID_RETURN_TIME" in temp:
-            if "price" in temp["PAID_RETURN_TIME"]:
-                RideData.lightningCurrency = temp["PAID_RETURN_TIME"]["price"][
-                    "currency"
-                ]
-                RideData.lightningPrice = temp["PAID_RETURN_TIME"]["price"]["amount"]
             RideData.lightningState = temp["PAID_RETURN_TIME"]["state"]
-            RideData.lightningStart = temp["PAID_RETURN_TIME"]["returnStart"]
-            RideData.lightningEnd = temp["PAID_RETURN_TIME"]["returnEnd"]
+            if RideData.lightningState == "AVAILABLE":
+                if "price" in temp["PAID_RETURN_TIME"]:
+                    RideData.lightningCurrency = temp["PAID_RETURN_TIME"]["price"][
+                        "currency"
+                    ]
+                    RideData.lightningPrice = temp["PAID_RETURN_TIME"]["price"]["amount"]
+                    if RideData.lightningCurrency == "USD":
+                        for digit in str(RideData.lightningPrice):
+                            TempVars.TempList.append(int(digit))
+                        TempVars.tempInt = len(TempVars.TempList) - 2
+                        TempVars.tempInt2 = len(TempVars.TempList) - 1
+                        TempVars.tempString = "." + str(TempVars.TempList[TempVars.tempInt]) + str(TempVars.TempList[TempVars.tempInt2])
+                        TempVars.TempList.pop(len(TempVars.TempList) - 1)
+                        TempVars.TempList.pop(len(TempVars.TempList) - 1)
+                        for digit in TempVars.TempList:
+                            TempVars.tempString2 = TempVars.tempString2 + str(digit)
+                        TempVars.tempString2 = TempVars.tempString2 + TempVars.tempString
+                        RideData.lightningPrice = TempVars.tempString2
+                
+                RideData.lightningStart = temp["PAID_RETURN_TIME"]["returnStart"]
+                RideData.lightningEnd = temp["PAID_RETURN_TIME"]["returnEnd"]
+
+            else:
+                RideData.lightningState = None
         if "BOARDING_GROUP" in temp:
             RideData.boardingState = temp["BOARDING_GROUP"]["allocationStatus"]
-            RideData.boardingStart = temp["BOARDING_GROUP"]["currentGroupStart"]
-            RideData.boardingEnd = temp["BOARDING_GROUP"]["currentGroupEnd"]
-            RideData.boardingTime = temp["BOARDING_GROUP"]["estimatedWait"]
-            RideData.boardingNext = temp["BOARDING_GROUP"]["nextAllocationTime"]
-
+            if RideData.boardingState == "AVAILABLE":
+                RideData.boardingStart = temp["BOARDING_GROUP"]["currentGroupStart"]
+                RideData.boardingEnd = temp["BOARDING_GROUP"]["currentGroupEnd"]
+                RideData.boardingTime = temp["BOARDING_GROUP"]["estimatedWait"]
+                RideData.boardingNext = temp["BOARDING_GROUP"]["nextAllocationTime"]
+            else:
+                RideData.boardingStart = None
+                RideData.boardingEnd = temp["BOARDING_GROUP"]["currentGroupEnd"]
+                RideData.boardingTime = temp["BOARDING_GROUP"]["estimatedWait"]
+                RideData.boardingNext = temp["BOARDING_GROUP"]["nextAllocationTime"]
 # App Screens
 class firstScreenFuncs:
     def screenInit():
